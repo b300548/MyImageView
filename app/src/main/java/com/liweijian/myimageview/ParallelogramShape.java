@@ -5,6 +5,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.shapes.Shape;
+import android.util.Log;
+
 
 /**
  * Created by Administrator on 2018/7/21.
@@ -18,6 +20,7 @@ class ParallelogramShape extends Shape {
     private float scale = -1f;
     private float roundAngleRadium = 0f;
     private float angle = 90f;
+    private float move;
 
 
 
@@ -41,6 +44,14 @@ class ParallelogramShape extends Shape {
     public void setAngle(float angle){
         this.angle = angle;
         this.scale = 1.0f - angle/90f;
+
+    }
+
+    public void setRoundAngleRadium(float radium){
+        this.roundAngleRadium = radium;
+        double radians  = Math.toRadians(angle);
+        float tan = (float) Math.tan(radians);
+        this.move = roundAngleRadium/tan;
     }
 
     //此方法设置path，path为平行四边形
@@ -55,13 +66,13 @@ class ParallelogramShape extends Shape {
         }
         path.reset();
         path.moveTo(offset,rect.left);
-        path.arcTo(rect.left+offset,rect.top,rect.left+offset+100,rect.top+100,270f,-60f,false);
-        path.lineTo(rect.left+50,rect.bottom-50);
-        path.arcTo(rect.left+50,rect.bottom-100,rect.left+150,rect.bottom,180f,-60f,false);
-        path.lineTo(rect.right-offset-50,rect.bottom);
-        path.arcTo(rect.right-100-offset,rect.bottom-100,rect.right-offset,rect.bottom,90f,-60f,false);
-        path.lineTo(rect.right-50,50);
-        path.arcTo(rect.right-150,rect.top,rect.right-50,rect.top+100,0f,-60f,false);
+        path.arcTo(rect.left+offset,rect.top,rect.left+offset+roundAngleRadium,rect.top+roundAngleRadium,270f,-angle,false);
+        path.lineTo(rect.left+move,rect.bottom-move);
+        path.arcTo(rect.left+move,rect.bottom-roundAngleRadium,rect.left+roundAngleRadium+move,rect.bottom,180f,-angle,false);
+        path.lineTo(rect.right-offset-move,rect.bottom);
+        path.arcTo(rect.right-roundAngleRadium-offset,rect.bottom-roundAngleRadium,rect.right-offset,rect.bottom,90f,-angle,false);
+        path.lineTo(rect.right-move,move);
+        path.arcTo(rect.right-roundAngleRadium-move,rect.top,rect.right-move,rect.top+roundAngleRadium,0f,-angle,false);
 
         canvas.drawPath(path,paint);
     }

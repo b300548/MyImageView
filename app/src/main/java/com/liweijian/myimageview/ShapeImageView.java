@@ -157,6 +157,10 @@ public class ShapeImageView extends ImageView {
         parallelogramShape.setAngle(angle);
     }
 
+    public void setRoundAngleRadium(float radium){
+        parallelogramShape.setRoundAngleRadium(radium);
+    }
+
     private Bitmap getRoundBitmap(Bitmap bitmap, int roundPx) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
