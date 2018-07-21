@@ -3,15 +3,21 @@ package com.liweijian.myimageview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.Shape;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -30,6 +36,9 @@ public class ShapeImageView extends ImageView {
     private ShapeDrawable mShapeDrawable;
     private boolean isShape = true;
     private boolean RebuildShape = true;
+
+    private Paint paint;
+
     public ShapeImageView(Context context) {
         super(context,null);
     }
@@ -91,6 +100,7 @@ public class ShapeImageView extends ImageView {
                 mShapeDrawable.getPaint().setStyle(Paint.Style.FILL);
                 mShapeDrawable.getPaint().setShader(bitmapShader);
                 mShapeDrawable.setShape(mShape);
+
             }
 
             //当是平行四边形时设置Shape的所在区域
@@ -142,4 +152,31 @@ public class ShapeImageView extends ImageView {
         float scalenew = scale/90.0f;
         parallelogramShape.setScale((float)(1.0f - scalenew));
     }
+
+    public void setAngle(float angle){
+        parallelogramShape.setAngle(angle);
+    }
+
+    private Bitmap getRoundBitmap(Bitmap bitmap, int roundPx) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        int x = bitmap.getWidth();
+
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+
+
+    }
+
 }

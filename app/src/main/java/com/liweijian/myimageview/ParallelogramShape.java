@@ -16,6 +16,8 @@ class ParallelogramShape extends Shape {
     private Rect rect;
     private int offset;
     private float scale = -1f;
+    private float roundAngleRadium = 0f;
+    private float angle = 90f;
 
 
 
@@ -36,6 +38,11 @@ class ParallelogramShape extends Shape {
         this.scale = scale;
     }
 
+    public void setAngle(float angle){
+        this.angle = angle;
+        this.scale = 1.0f - angle/90f;
+    }
+
     //此方法设置path，path为平行四边形
     @Override
     public void draw(Canvas canvas, Paint paint) {
@@ -48,9 +55,14 @@ class ParallelogramShape extends Shape {
         }
         path.reset();
         path.moveTo(offset,rect.left);
-        path.lineTo(rect.left,rect.bottom);
-        path.lineTo(rect.right-offset,rect.bottom);
-        path.lineTo(rect.right,0);
+        path.arcTo(rect.left+offset,rect.top,rect.left+offset+100,rect.top+100,270f,-60f,false);
+        path.lineTo(rect.left+50,rect.bottom-50);
+        path.arcTo(rect.left+50,rect.bottom-100,rect.left+150,rect.bottom,180f,-60f,false);
+        path.lineTo(rect.right-offset-50,rect.bottom);
+        path.arcTo(rect.right-100-offset,rect.bottom-100,rect.right-offset,rect.bottom,90f,-60f,false);
+        path.lineTo(rect.right-50,50);
+        path.arcTo(rect.right-150,rect.top,rect.right-50,rect.top+100,0f,-60f,false);
+
         canvas.drawPath(path,paint);
     }
 

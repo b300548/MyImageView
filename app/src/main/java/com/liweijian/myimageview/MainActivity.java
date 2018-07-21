@@ -1,6 +1,10 @@
 package com.liweijian.myimageview;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,5 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
         imageView1 = (ShapeImageView)findViewById(R.id.image1);
         imageView1.setScale(60f);
+
+
     }
+
+
 }
