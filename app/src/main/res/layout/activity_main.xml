@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.liweijian.myimageview.MainActivity">
 
     <com.liweijian.myimageview.ShapeImageView
         android:id="@+id/image1"
         android:layout_width="250dp"
         android:layout_height="150dp"
-        android:layout_centerInParent="true"
         android:scaleType="fitXY"
-        android:src="@drawable/image1"
+        android:src="@drawable/image2"
+        android:layout_marginLeft="50dp"
         />
 
     <com.liweijian.myimageview.ShapeImageView
@@ -20,8 +21,27 @@
         android:layout_width="250dp"
         android:layout_height="150dp"
         android:scaleType="fitXY"
-        android:src="@drawable/image2" />
+        android:src="@drawable/image2"
+        android:layout_marginLeft="50dp"/>
+
+    <com.liweijian.myimageview.ShapeImageView
+        android:id="@+id/image3"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/image1"
+        android:layout_marginLeft="50dp"/>
+
+    <com.liweijian.myimageview.ShapeImageView
+        android:id="@+id/image4"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/image1"
+        android:layout_marginLeft="50dp"/>
 
 
 
-</RelativeLayout>
+
+
+</LinearLayout>

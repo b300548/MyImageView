@@ -42,16 +42,15 @@ class ParallelogramShape extends Shape {
     }
 
     public void setAngle(float angle){
-        this.angle = angle;
-        this.scale = 1.0f - angle/90f;
-
+        if(angle > 0f && angle < 90f)
+            this.scale = 1.0f - angle/90f;
     }
 
     public void setRoundAngleRadium(float radium){
-        this.roundAngleRadium = radium;
-        double radians  = Math.toRadians(angle);
-        float tan = (float) Math.tan(radians);
-        this.move = roundAngleRadium/tan;
+            this.roundAngleRadium = radium;
+            double radians = Math.toRadians(angle);
+            float tan = (float) Math.tan(radians);
+            this.move = roundAngleRadium / tan;
     }
 
     //此方法设置path，path为平行四边形
@@ -64,15 +63,19 @@ class ParallelogramShape extends Shape {
         if (scale > 0.0f && scale < 1.0f){
             offset = (int)(scale * rect.width());
         }
+
         path.reset();
-        path.moveTo(offset,rect.left);
-        path.arcTo(rect.left+offset,rect.top,rect.left+offset+roundAngleRadium,rect.top+roundAngleRadium,270f,-angle,false);
-        path.lineTo(rect.left+move,rect.bottom-move);
-        path.arcTo(rect.left+move,rect.bottom-roundAngleRadium,rect.left+roundAngleRadium+move,rect.bottom,180f,-angle,false);
-        path.lineTo(rect.right-offset-move,rect.bottom);
-        path.arcTo(rect.right-roundAngleRadium-offset,rect.bottom-roundAngleRadium,rect.right-offset,rect.bottom,90f,-angle,false);
-        path.lineTo(rect.right-move,move);
-        path.arcTo(rect.right-roundAngleRadium-move,rect.top,rect.right-move,rect.top+roundAngleRadium,0f,-angle,false);
+        path.moveTo(offset+roundAngleRadium-move,rect.top);
+        Log.i("move",Float.toString(move));
+        path.arcTo(rect.left+offset-move,rect.top,rect.left+offset+roundAngleRadium*2-move,rect.top+roundAngleRadium*2,270f,-angle,false);
+        path.lineTo(rect.left+move,rect.bottom-roundAngleRadium);
+        path.arcTo(rect.left+move,rect.bottom-roundAngleRadium*2,rect.left+roundAngleRadium*2+move,rect.bottom,180f+angle,-angle*2,false);
+        //path.lineTo(rect.right-offset-move,rect.bottom);
+        path.lineTo(rect.right-offset-roundAngleRadium,rect.bottom);
+        path.arcTo(rect.right-roundAngleRadium*2-offset+move,rect.bottom-roundAngleRadium*2,rect.right-offset+move,rect.bottom,90f,-angle,false);
+       // path.lineTo(rect.right-move,rect.top+move);
+        path.lineTo(rect.right-move,rect.top+roundAngleRadium);
+        path.arcTo(rect.right-roundAngleRadium*2-move,rect.top,rect.right-move,rect.top+roundAngleRadium*2,0f+angle,-angle*2,false);
 
         canvas.drawPath(path,paint);
     }
